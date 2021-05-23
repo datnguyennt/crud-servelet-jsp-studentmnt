@@ -62,9 +62,10 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        <% int x = 1;%> 
                                                         <c:forEach items = "${listS}" var="x">
                                                             <tr>
-                                                                <td>${x.id}</td>
+                                                                <td><%= x%></td>
                                                                 <td>${x.fullName}</td>
                                                                 <td>${x.gender}</td>
                                                                 <td>
@@ -75,6 +76,7 @@
                                                                     <button onclick="deleteStudent(${x.id})" type="button" class="btn btn-danger icon-only"><i class="fa fa-trash-o"></i></button>
                                                                 </td>
                                                             </tr>
+                                                            <% x++;%>
                                                         </c:forEach>
                                                     </tbody>
                                                 </table>
@@ -93,14 +95,16 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </body>
     <script>
-    //Sự kiện click button thêm 
-        $('#btnThem').click(function () {
-        window.location.href = "AddStudent.jsp";
-        });
-        function deleteStudent(id) {
-        var option = confirm("Bạn có muốn xóa sinh viên này? ");
-                if (option) {
-        window.location.href = "delete?sid=" + id;
-        }};
+                                                                        //Sự kiện click button thêm 
+                                                                        $('#btnThem').click(function () {
+                                                                            window.location.href = "AddStudent.jsp";
+                                                                        });
+                                                                        function deleteStudent(id) {
+                                                                            var option = confirm("Bạn có muốn xóa sinh viên này? ");
+                                                                            if (option) {
+                                                                                window.location.href = "delete?sid=" + id;
+                                                                            }
+                                                                        }
+                                                                        ;
     </script>
 </html>

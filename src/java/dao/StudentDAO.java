@@ -6,6 +6,7 @@
 package dao;
 
 import context.DbContext;
+import entity.LoginModel;
 import entity.Student;
 import java.sql.*;
 import java.util.*;
@@ -54,7 +55,7 @@ public class StudentDAO {
     }
 
     public void InsertStudent(String name, String gender, String DOB) {
-        String query = "insert into Student values (?,?,?)";
+        String query = "insert into Student (name, gender, dob) values (?,?,?)";
         try {
             conn = new DbContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -77,7 +78,7 @@ public class StudentDAO {
             ps.setString(1, ID);
             rs = ps.executeQuery();
             while (rs.next()) {
-               return new Student(rs.getInt(1),
+                return new Student(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getDate(4));
@@ -87,8 +88,8 @@ public class StudentDAO {
         }
         return null;
     }
-    
-    public void UpdateStudent(String name, String gender, String DOB, String ID){
+
+    public void UpdateStudent(String name, String gender, String DOB, String ID) {
         String query = "update Student set name = ?, gender = ?, dob = ? where StudentID = ?";
         try {
             conn = new DbContext().getConnection();
@@ -100,5 +101,22 @@ public class StudentDAO {
             ps.executeUpdate();
         } catch (Exception e) {
         }
+    }
+
+    public LoginModel LoginStudent(String username, String password) {
+        String query = "select * from Student where username = ? and passuser = ?";
+        try {
+            conn = new DbContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            rs = ps.executeQuery();
+            while (rs.next()) {                
+                LoginModel login = new LoginModel(rs.getString(1), rs.getString(2));
+                return login;
+            }
+        } catch (Exception e) {
+        }
+        return null;
     }
 }
